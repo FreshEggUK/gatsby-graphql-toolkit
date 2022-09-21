@@ -1,7 +1,10 @@
 import { inspect } from "util"
 import PQueue, { Options as PQueueOptions } from "p-queue"
-import fetch, { RequestInit as FetchOptions } from "node-fetch"
+import origFetch, { RequestInit as FetchOptions } from "node-fetch"
 import { IQueryExecutionArgs, IQueryExecutor } from "../types"
+import fetchRetry from "@vercel/fetch-retry";
+const fetch = fetchRetry(origFetch);
+
 
 export function createNetworkQueryExecutor(
   uri: string,
